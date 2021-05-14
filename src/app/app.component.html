@@ -1,23 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="">DevBarbers</a>
+    <a class="navbar-brand" [routerLink]="'/'" [routerLinkActive]="'active'">DevBarbers</a>
     <button class="navbar-toggler" (click)="isMenuCollapsed = !isMenuCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Register</a>
+      <li class="nav-item">
+        <a class="nav-link" [routerLinkActive]="'active'" [routerLink]="'/login/signup'" (click)="isMenuCollapsed = true">Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/login'" (click)="isMenuCollapsed = true">Login</a>
+        <a class="nav-link" [routerLinkActive]="'active'" [routerLink]="'/login'" (click)="isMenuCollapsed = true">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">About</a>
+        <a class="nav-link" [routerLinkActive]="'active'" [routerLink]="'/about'" (click)="isMenuCollapsed = true">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Contact</a>
+        <a class="nav-link" [routerLinkActive]="'active'" [routerLink]="'/contact'" (click)="isMenuCollapsed = true">Contact</a>
       </li>
     </ul>
   </div>
