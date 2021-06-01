@@ -1,0 +1,27 @@
+<div class="input-group mb-3">
+    <label class="input-group-text" [ngClass]="class">{{label}}</label>
+    <input class="form-control" *ngIf="type === 'input'" [type]="input" [formControl]="control"/>
+    <textarea class="form-control" *ngIf="type==='textarea'" [formControl]="control"></textarea>
+    <div *ngIf="showErrors()" class="invalid-feedback d-block">
+        <p *ngIf="control.errors?.required">
+            Esse campo é requirido
+        </p>
+        <p *ngIf="control.errors?.minlength">
+            Esse campo tem que ter no minimo {{control.errors?.minlength.requiredLength}}
+            e no momento está com {{control.errors?.minlength.actualLength}}
+        </p>
+        <p *ngIf="control.errors?.maxlength">
+            Esse campo tem que ter no máximo {{control.errors?.maxlength.requiredLength}}
+            e no momento está com {{control.errors?.maxlength.actualLength}}
+        </p>
+        <p *ngIf="control.errors?.nonUniqueUsername">
+            Usuario já existente no sistema escolha outro por favor
+        </p>
+        <p *ngIf="control.errors?.pattern">
+            Formato inválido para esse campo
+        </p>
+        <p *ngIf="control.errors?.email">
+            Coloque um email válido
+        </p>
+    </div>
+</div>

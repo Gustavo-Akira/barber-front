@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-interface LoginDTO{
-  username:string,
-  password:string
-}
+import { LoginDTO, LoginService } from '../service/login.service';
+
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,7 @@ interface LoginDTO{
 })
 export class LoginPage implements OnInit {
   loginModel: LoginDTO;
-  constructor() { 
+  constructor(private service: LoginService) { 
     this.loginModel = {
       username:"",
       password:""
@@ -22,4 +21,9 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {
   }
 
+  onSubmit(): void{
+    this.service.login(this.loginModel).subscribe((data)=>{
+      console.log(data);
+    });
+  }
 }

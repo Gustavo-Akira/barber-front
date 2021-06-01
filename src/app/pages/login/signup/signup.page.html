@@ -1,1 +1,4 @@
-<p>signup works!</p>
+<form (submit) = "onSubmit()" class="container" [formGroup]="signupFormGroup">
+    <app-input label="Username" input="text" [control]="controler('username')"></app-input>
+    <app-input label="name" input="text" [control]="controler('name')"></app-input>
+</form>
