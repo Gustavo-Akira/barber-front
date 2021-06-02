@@ -1,4 +1,8 @@
-<form (submit) = "onSubmit()" class="container" [formGroup]="signupFormGroup">
-    <app-input label="Username" input="text" [control]="controler('username')"></app-input>
+<form class="container" (submit) = "onSubmit()" [formGroup]="signupFormGroup">
+    <h1 class="text-center">Signup</h1>
+    <app-input label="username" input="text" [control]="controler('username')"></app-input>
     <app-input label="name" input="text" [control]="controler('name')"></app-input>
+    <app-input label="password" input="password" [control]="controler('password')"></app-input>
+    <app-input label="color" input="text" type="color" [control]="controler('color')"></app-input>
+    <app-button [onSubmit]="onSubmit" btnType="confirmation" value="Confirmation"></app-button>
 </form>

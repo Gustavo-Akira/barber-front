@@ -2,6 +2,7 @@
     <label class="input-group-text" [ngClass]="class">{{label}}</label>
     <input class="form-control" *ngIf="type === 'input'" [type]="input" [formControl]="control"/>
     <textarea class="form-control" *ngIf="type==='textarea'" [formControl]="control"></textarea>
+    <input *ngIf="type==='color'" type='color' class="form-control" [formControl]="control">
     <div *ngIf="showErrors()" class="invalid-feedback d-block">
         <p *ngIf="control.errors?.required">
             Esse campo é requirido

@@ -15,17 +15,16 @@ export class InputComponent {
   constructor() { }
 
   showErrors(){
-    const {dirty, touched, errors} = this.control;
-    return dirty && touched && errors;
+    const {touched, errors} = this.control;
+    return touched && errors;
   }
 
   get class(){
-    if(this.showErrors() && this.control.touched){
+    if(this.showErrors()){
       return 'error';
-    }else if(!this.showErrors() && this.control.touched){
+    }else if(this.control.dirty){
       return 'accepted';
-    }else{
-      return '';
     }
+    return '';
   }
 }
