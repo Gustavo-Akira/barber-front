@@ -18,10 +18,14 @@ interface UsernameAvailabe{
 })
 export class LoginService {
 
+  headers={
+    'Content-Type':'application/json'
+  };
+
   constructor(private http:HttpClient) { }
 
   signup(barber: Barber){
-    return this.http.post<Barber>(ServiceUtils.getBaseUrl()+"/barber",barber);
+    return this.http.post<Barber>(ServiceUtils.getBaseUrl()+"/barber",JSON.stringify(barber),{headers:this.headers});
   }
 
   login(login: LoginDTO){

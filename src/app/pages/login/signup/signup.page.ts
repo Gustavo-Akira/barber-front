@@ -42,10 +42,14 @@ export class SignupPage implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(){
+  onSend(){
     this.service.signup(this.signupFormGroup.value).subscribe((barber: Barber)=>{
       console.log(barber);
     });
+  }
+
+  onCancel(){
+    console.log('cancel');
   }
   
   controler(name:string){

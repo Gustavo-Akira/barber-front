@@ -1,8 +1,11 @@
-<form class="container" (submit) = "onSubmit()" [formGroup]="signupFormGroup">
+<div class="container form">
     <h1 class="text-center">Signup</h1>
     <app-input label="username" input="text" [control]="controler('username')"></app-input>
     <app-input label="name" input="text" [control]="controler('name')"></app-input>
     <app-input label="password" input="password" [control]="controler('password')"></app-input>
     <app-input label="color" input="text" type="color" [control]="controler('color')"></app-input>
-    <app-button [onSubmit]="onSubmit" btnType="confirmation" value="Confirmation"></app-button>
-</form>
+    <div class="button-container">
+        <app-button (event)="onSend()" type="button" btnType="confirmation" value="Confirmation" [form]="signupFormGroup"></app-button>
+        <app-button (event)="onCancel()" type="button" btnType="cancel" value="Cancel"></app-button>
+    </div>
+</div>
