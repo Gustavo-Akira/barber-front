@@ -1,5 +1,6 @@
 import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 
 import Barber from 'src/app/shared/models/barber.model';
 import ServiceUtils from 'src/app/shared/util/service.utils';
@@ -11,6 +12,10 @@ export interface LoginDTO{
 
 interface UsernameAvailabe{
   available: boolean;
+}
+
+export interface ResponseLoginDTO{
+  Authorization:string;
 }
 
 @Injectable({
@@ -29,7 +34,7 @@ export class LoginService {
   }
 
   login(login: LoginDTO){
-    return this.http.post<string>(ServiceUtils.getBaseUrl()+'/login',login);
+    return this.http.post<ResponseLoginDTO>(ServiceUtils.getBaseUrl()+'/login',login);
   }
 
   isUsernameAvailable(username: string){

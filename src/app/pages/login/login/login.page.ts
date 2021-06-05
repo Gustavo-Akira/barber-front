@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/shared/states/action/auth.actions';
 
 import { LoginDTO, LoginService } from '../service/login.service';
 
@@ -22,16 +25,14 @@ export class LoginPage implements OnInit {
       Validators.min(3)
     ])
   });
-  constructor(private service: LoginService) { 
+  constructor(private store:Store,private router: Router) { 
   }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void{
-    this.service.login(this.loginForm.value).subscribe((data)=>{
-      console.log(data);
-    });
+    this.store.dispatch(login(this.loginForm.value));
   }
 
   controler(name:string){
