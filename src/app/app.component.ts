@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from './shared/states/reducer/auth.reducer';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +12,11 @@ export class AppComponent {
   title = 'barber';
   isMenuCollapsed: boolean = true;
   
+  constructor(private router: Router, private store: Store<{login:State}>){
+    this.store.select('login').subscribe(x=>{
+      if(x.token != null){
+        this.router.navigateByUrl('/barber');
+      }
+    });
+  }
 }

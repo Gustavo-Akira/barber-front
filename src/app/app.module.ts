@@ -11,6 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import  { reducer as loginReducer} from './shared/states/reducer/auth.reducer';
 import { LoginEffect } from './shared/states/effects/login.effects';
+import { storageMetaReducer } from './shared/states/reducer/storage.metareducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,12 @@ import { LoginEffect } from './shared/states/effects/login.effects';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    StoreModule.forRoot({login: loginReducer}),
+    StoreModule.forRoot(
+      {login: loginReducer},
+      {
+        metaReducers: [storageMetaReducer]
+      }
+    ),
     EffectsModule.forRoot([LoginEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],

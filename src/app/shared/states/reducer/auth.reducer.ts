@@ -2,7 +2,7 @@ import {createReducer, on, Action} from '@ngrx/store';
 import { login, loginFailed, loginSucess } from '../action/auth.actions';
 
 
-interface State {
+export interface State {
     token: string;
     username: string;
     password: string;
@@ -17,10 +17,7 @@ export const initialState: State = {
 const _authReducer = createReducer(
     initialState,
     on(login, (state,{username,password}) =>({...state, username, password})),
-    on(loginSucess,(state, {Authorization})=>{
-        console.log(Authorization);
-        return ({...state, token:Authorization.toString().split(" ")[1]});
-    }),
+    on(loginSucess,(state, {Authorization})=> ({...state, token:Authorization.toString().split(" ")[1]})),
     on(loginFailed,() => initialState)
 );
 
