@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BarberPage } from './barber/barber.page';
 import { BarberRoutingModule } from './barber-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -11,7 +12,8 @@ import { BarberRoutingModule } from './barber-routing.module';
   ],
   imports: [
     CommonModule,
-    BarberRoutingModule
+    BarberRoutingModule,
+    HttpClientModule
   ]
 })
 export class BarberModule { }
