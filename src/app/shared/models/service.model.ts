@@ -6,5 +6,5 @@ export default interface Service{
     name: string;
     value: number;
     appointment: Array<Appointment> | null;
-    barbers: Array<Barber>;
+    barber: Barber;
 }
