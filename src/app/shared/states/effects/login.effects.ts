@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, exhaustMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { LoginService, ResponseLoginDTO } from 'src/app/pages/login/service/login.service';
-import { AuthActionType, login, loginSucess } from '../action/auth.actions';
+import { AuthActionType, login, loginFailed, loginSucess } from '../action/auth.actions';
 
 @Injectable()
 export class LoginEffect{
@@ -16,9 +16,10 @@ export class LoginEffect{
         ofType(AuthActionType.LOGIN),
         exhaustMap(({username, password})=> this.loginService.login({username, password})
             .pipe(
-                map((Authorization: ResponseLoginDTO) =>loginSucess(Authorization))
+                map((Authorization: ResponseLoginDTO) =>loginSucess(Authorization)),
+                catchError(()=> of(loginFailed()))
             )
-        )
+        ),
     ));
 
 

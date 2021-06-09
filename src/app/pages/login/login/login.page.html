@@ -1,5 +1,8 @@
 <div class="container form-container">
   <app-input label="Username" [control]="controler('username')"></app-input>
-  <app-input label="Password" [control]="controler('password')"></app-input>
+  <app-input label="Password" input="password" [control]="controler('password')"></app-input>
   <app-button value="Login" btnType="confirmation" (event)="onSubmit()"></app-button>
+  <app-modal (dimiss)="onDimiss()" *ngIf="getError()" title="Error">
+    <h6 style="color: red">Error: Email or password incorrect</h6>
+  </app-modal>
 </div>

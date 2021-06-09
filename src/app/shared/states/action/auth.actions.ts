@@ -4,7 +4,8 @@ import { ResponseLoginDTO } from 'src/app/pages/login/service/login.service';
 export enum AuthActionType{
     LOGIN = '[Login] Login Attempt',
     SUCCESS = '[Login] Login Success',
-    FAIL = '[Login] Login Failed'
+    FAIL = '[Login] Login Failed',
+    REFRESH = '[Login] Login Refresh'
 }
 
 
@@ -20,4 +21,8 @@ export const loginSucess = createAction(
 
 export const loginFailed = createAction(
     AuthActionType.FAIL,
+)
+
+export const loginRefresh = createAction(
+    AuthActionType.REFRESH,
 )
