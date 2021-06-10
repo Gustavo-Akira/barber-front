@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
@@ -11,7 +11,7 @@ import { ClientService } from '../service/client.service';
 @Component({
   selector: 'app-barber',
   templateUrl: './barber.page.html',
-  styleUrls: ['./barber.page.sass']
+  styleUrls: ['./barber.page.sass'],
 })
 export class BarberPage implements OnInit {
 
@@ -20,19 +20,40 @@ export class BarberPage implements OnInit {
 
   clientName: string = '';
 
-  constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>) { }
+  constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
+  }
 
   ngOnInit(): void {
-    this.service.getLoggedInUser().subscribe(logged =>{
-      this.barber = logged;
-    });
+    this.loadBarberData();
   }
 
   isClientNull(): boolean{
-    return this.barber.clients?.length == 0;
+    return this.barber.clients == null;
   }
 
   saveClient(){
-    this.clientservice.saveClient(this.clientName);
+    this.clientservice.saveClient(this.clientName).subscribe(
+      client =>{
+        this.barber.clients?.push(client);
+      }
+    );
+    this.changeShowModal();
+  }
+
+  changeShowModal(){
+    this.showModal = !this.showModal;
+  }
+
+  loadBarberData(){
+    this.service.getLoggedInUser().subscribe(logged =>{
+      this.barber = logged;
+    });
+    this.clientservice.getClients().subscribe(clients =>{
+      this.barber.clients = clients;
+    });
+  }
+
+  trackClient(index: number,client:Client){
+    return client.id;
   }
 }

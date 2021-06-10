@@ -6,14 +6,12 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <button class="btn btn-success" (click)="showModal = true">
-                Add
-            </button>
+            <app-button btnType="btn-success" (event)="changeShowModal()" value="add"></app-button>
         </div>
-        <div class="col-sm-12" *ngFor="let client of barber.clients">
+        <div class="col-sm-12 client" *ngFor="let client of barber.clients;trackBy:trackClient">
             <div class="card">
                 <div class="card-body">
-                    
+                    {{client.name}} : $ {{client.amount}}
                 </div>
             </div>
         </div>
@@ -21,7 +19,8 @@
             <h1>You dont have clients</h1>
         </div>
         <app-modal (dimiss)="showModal =false" title="Create Client" *ngIf="showModal">
-
+            <input type="text" [(ngModel)]="clientName"/>
+            <app-button btnType="btn-success"(event)="saveClient()" value="Add" footer></app-button>
         </app-modal>
     </div>
 </div>

@@ -4,6 +4,7 @@ import { BarberPage } from './barber/barber.page';
 import { BarberRoutingModule } from './barber-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     BarberRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class BarberModule { }

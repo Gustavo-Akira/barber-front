@@ -15,7 +15,6 @@ export class AppComponent {
   
   constructor(private router: Router, private store: Store<{login:State}>){
     this.store.select('login').subscribe(x=>{
-      console.log(x);
       if(x.token!="null"){
         this.logged = true;
         this.router.navigateByUrl('/barber');

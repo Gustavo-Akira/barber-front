@@ -6,4 +6,5 @@ export default interface Client{
     name: string;
     appointment: Array<Appointment>;
     barber: Barber;
+    amount: number;
 }
