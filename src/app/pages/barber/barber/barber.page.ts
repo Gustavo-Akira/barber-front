@@ -28,12 +28,15 @@ export class BarberPage implements OnInit {
   }
 
   isClientNull(): boolean{
-    return this.barber.clients == null;
+    return !this.barber.clients || this.barber.clients.length == 0;
   }
 
   saveClient(){
     this.clientservice.saveClient(this.clientName).subscribe(
       client =>{
+        if(this.barber.clients == null){
+          this.barber.clients = [];
+        }
         this.barber.clients?.push(client);
       }
     );
@@ -42,6 +45,7 @@ export class BarberPage implements OnInit {
 
   changeShowModal(){
     this.showModal = !this.showModal;
+    this.clientName = '';
   }
 
   loadBarberData(){
@@ -55,5 +59,17 @@ export class BarberPage implements OnInit {
 
   trackClient(index: number,client:Client){
     return client.id;
+  }
+
+  onClickDelete(id:number | null){
+    if(id != null){
+      this.clientservice.deleteClient(id).subscribe(client=>{
+        let fixtureclients = this.barber.clients?.filter(x => x.id != client.id);
+        this.barber.clients = fixtureclients != undefined ? fixtureclients : [];
+        if(this.barber.clients.length == 0 ){
+          this.ref.markForCheck();
+        }
+      });
+    }
   }
 }

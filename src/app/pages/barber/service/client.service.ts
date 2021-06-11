@@ -26,4 +26,8 @@ export class ClientService {
   getClients(){
     return this.http.get<Array<Client>>(ServiceUtils.getBaseUrl() + "/clients",this.options);
   }
+
+  deleteClient(id:number){
+    return this.http.delete<Client>(ServiceUtils.getBaseUrl() + "/client/"+id,this.options)
+  }
 }
