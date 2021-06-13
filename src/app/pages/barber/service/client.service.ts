@@ -30,4 +30,8 @@ export class ClientService {
   deleteClient(id:number){
     return this.http.delete<Client>(ServiceUtils.getBaseUrl() + "/client/"+id,this.options)
   }
+
+  updateClient(name: string,id:number| null){
+    return this.http.put<Client>(ServiceUtils.getBaseUrl() + "/client/"+id,{name:name},this.options);
+  }
 }

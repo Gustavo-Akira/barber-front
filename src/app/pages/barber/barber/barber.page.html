@@ -8,14 +8,14 @@
         <div class="col-sm-12">
             <app-button btnType="btn-success" (event)="changeShowModal()" value="add"></app-button>
         </div>
-        <div class="col-sm-12 client" *ngFor="let client of barber.clients;trackBy:trackClient">
+        <div class="col-sm-12 client" *ngFor="let client of barber.clients">
             <div class=" card row no-gutters">
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">{{client.name}}</h5>
                     <p class="card-text">R$ {{client.amount}}</p>
                     <div class="row buttons">
-                        <app-button btnType="btn-warning minor" value="update"></app-button>
+                        <app-button btnType="btn-warning minor" value="update" (event)="changeShowModal(client.id)"></app-button>
                         <app-button btnType="btn-danger minor" value="delete" (event)="onClickDelete(client.id)"></app-button>
                     </div>
                   </div>
@@ -25,9 +25,9 @@
         <div *ngIf="isClientNull()" class="col-sm-12">
             <h1>You dont have clients</h1>
         </div>
-        <app-modal (dimiss)="showModal =false" title="Create Client" *ngIf="showModal">
+        <app-modal (dimiss)="changeShowModal()" title="Create Client" *ngIf="showModal">
             <input type="text" [(ngModel)]="clientName"/>
-            <app-button btnType="btn-success"(event)="saveClient()" value="Add" footer></app-button>
+            <app-button btnType="btn-success" (event)="modalAction()" [value]="buttonText" footer></app-button>
         </app-modal>
     </div>
 </div>

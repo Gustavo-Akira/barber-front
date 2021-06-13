@@ -18,7 +18,11 @@ export class BarberPage implements OnInit {
   barber!: Barber;
   showModal: boolean = false;
 
+  update:Client | undefined;
+
   clientName: string = '';
+
+  buttonText: string = "Add";
 
   constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
   }
@@ -30,7 +34,13 @@ export class BarberPage implements OnInit {
   isClientNull(): boolean{
     return !this.barber.clients || this.barber.clients.length == 0;
   }
-
+  modalAction(){
+    if(this.update){
+      this.updateClient();
+    }else{
+      this.saveClient();
+    }
+  }
   saveClient(){
     this.clientservice.saveClient(this.clientName).subscribe(
       client =>{
@@ -43,9 +53,28 @@ export class BarberPage implements OnInit {
     this.changeShowModal();
   }
 
-  changeShowModal(){
+  updateClient(){
+    if(this.update){
+      this.clientservice.updateClient(this.clientName,this.update.id).subscribe(x=>{
+        for(let y = 0;y<this.barber.clients!.length;y++){
+          if(this.barber.clients![y].id == x.id){
+            this.barber.clients![y] = x;
+          }
+        }
+      });
+    }
+    this.changeShowModal();
+  }
+
+  changeShowModal(update:number | null = 0){
+    this.update = this.barber.clients?.find(x => x.id == update);
+    if(this.update){
+      this.buttonText = "Update";
+      this.clientName = this.update.name;
+    }else{
+      this.clientName = '';
+    }
     this.showModal = !this.showModal;
-    this.clientName = '';
   }
 
   loadBarberData(){
@@ -57,9 +86,6 @@ export class BarberPage implements OnInit {
     });
   }
 
-  trackClient(index: number,client:Client){
-    return client.id;
-  }
 
   onClickDelete(id:number | null){
     if(id != null){
