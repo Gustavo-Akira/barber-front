@@ -24,6 +24,8 @@ export class BarberPage implements OnInit {
 
   buttonText: string = "Add";
 
+  title: string = "Add";
+
   constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
   }
 
@@ -71,8 +73,11 @@ export class BarberPage implements OnInit {
     if(this.update){
       this.buttonText = "Update";
       this.clientName = this.update.name;
+      this.title = "Update";
     }else{
       this.clientName = '';
+      this.title ="Create";
+      this.buttonText = "Add";
     }
     this.showModal = !this.showModal;
   }

@@ -25,7 +25,7 @@
         <div *ngIf="isClientNull()" class="col-sm-12">
             <h1>You dont have clients</h1>
         </div>
-        <app-modal (dimiss)="changeShowModal()" title="Create Client" *ngIf="showModal">
+        <app-modal (dimiss)="changeShowModal()" title="{{title}} Client" *ngIf="showModal">
             <input type="text" [(ngModel)]="clientName"/>
             <app-button btnType="btn-success" (event)="modalAction()" [value]="buttonText" footer></app-button>
         </app-modal>
