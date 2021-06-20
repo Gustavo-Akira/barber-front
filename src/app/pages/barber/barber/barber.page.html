@@ -22,6 +22,9 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 mt-3">
+            <app-pagination [pages]="this.numberofPages"></app-pagination>
+        </div>
         <div *ngIf="isClientNull()" class="col-sm-12">
             <h1>You dont have clients</h1>
         </div>

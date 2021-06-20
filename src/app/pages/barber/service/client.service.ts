@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+
 import Client from 'src/app/shared/models/client.model';
 import { State } from 'src/app/shared/states/reducer/auth.reducer';
+import { Page } from 'src/app/shared/util/generic/page.model';
 import ServiceUtils from 'src/app/shared/util/service.utils';
 
 @Injectable({
@@ -23,8 +25,8 @@ export class ClientService {
     return this.http.post<Client>(`${ServiceUtils.getBaseUrl()}/client`,{name:client,amount:0.0},this.options);
   }
 
-  getClients(){
-    return this.http.get<Array<Client>>(ServiceUtils.getBaseUrl() + "/clients",this.options);
+  getClients(page: number){
+    return this.http.get<Page<Client>>(ServiceUtils.getBaseUrl() + "/clients/"+page,this.options);
   }
 
   deleteClient(id:number){

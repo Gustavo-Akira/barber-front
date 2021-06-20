@@ -26,6 +26,8 @@ export class BarberPage implements OnInit {
 
   title: string = "Add";
 
+  numberofPages: number = 0;
+
   constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
   }
 
@@ -86,8 +88,9 @@ export class BarberPage implements OnInit {
     this.service.getLoggedInUser().subscribe(logged =>{
       this.barber = logged;
     });
-    this.clientservice.getClients().subscribe(clients =>{
-      this.barber.clients = clients;
+    this.clientservice.getClients(0).subscribe(clients =>{
+      this.barber.clients = clients.content;
+      this.numberofPages = clients.number;
     });
   }
 

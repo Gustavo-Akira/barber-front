@@ -4,6 +4,7 @@ import { InputComponent } from './components/input/input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 
 
@@ -11,7 +12,8 @@ import { ModalComponent } from './components/modal/modal.component';
   declarations: [
     InputComponent,
     ButtonComponent,
-    ModalComponent
+    ModalComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { ModalComponent } from './components/modal/modal.component';
   exports:[
     InputComponent,
     ButtonComponent,
-    ModalComponent
+    ModalComponent,
+    PaginationComponent
   ]
 })
 export class SharedModule { }

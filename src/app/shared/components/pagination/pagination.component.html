@@ -1,0 +1,7 @@
+<nav>
+    <ul class="pagination d-flex justify-content-center">
+        <li class="page-item" *ngFor="let x of getPages()" [ngClass]="{'active':x == actualPage}">
+            <button class="page-link">{{x + 1}}</button>
+        </li>
+    </ul>
+</nav>
