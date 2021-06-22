@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +12,8 @@ import { environment } from '../environments/environment';
 import  { reducer as loginReducer} from './shared/states/reducer/auth.reducer';
 import { LoginEffect } from './shared/states/effects/login.effects';
 import { storageMetaReducer } from './shared/states/reducer/storage.metareducer';
+import { LoadService } from './shared/service/load.service';
+import { HttpRequestInterceptor } from './shared/interceptors/httprequest.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,10 @@ import { storageMetaReducer } from './shared/states/reducer/storage.metareducer'
     EffectsModule.forRoot([LoginEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
-  providers: [],
+  providers: [
+    HttpRequestInterceptor,
+    {provide: HTTP_INTERCEPTORS,useClass: HttpRequestInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

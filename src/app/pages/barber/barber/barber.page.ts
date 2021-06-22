@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { delay } from 'rxjs/operators';
 
 import Barber from 'src/app/shared/models/barber.model';
 import Client from 'src/app/shared/models/client.model';
+import { LoadService } from 'src/app/shared/service/load.service';
 import { State } from 'src/app/shared/states/reducer/auth.reducer';
 import { BarberService } from '../service/barber.service';
 import { ClientService } from '../service/client.service';
@@ -27,12 +29,17 @@ export class BarberPage implements OnInit {
   title: string = "Add";
 
   numberofPages: number = 0;
+  
+  actualPage: number = 0;
+  
+  loading: boolean = false;
 
-  constructor(private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
+  constructor(private loadService: LoadService,private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
   }
 
   ngOnInit(): void {
-    this.loadBarberData();
+    this.loadBarberData(0);
+    this.listenToLoading();
   }
 
   isClientNull(): boolean{
@@ -46,7 +53,8 @@ export class BarberPage implements OnInit {
     }
   }
   saveClient(){
-    this.clientservice.saveClient(this.clientName).subscribe(
+    this.clientservice.saveClient(this.clientName)
+    .subscribe(
       client =>{
         if(this.barber.clients == null){
           this.barber.clients = [];
@@ -84,14 +92,16 @@ export class BarberPage implements OnInit {
     this.showModal = !this.showModal;
   }
 
-  loadBarberData(){
+  loadBarberData(page: number){
+    this.loading = true;
     this.service.getLoggedInUser().subscribe(logged =>{
       this.barber = logged;
     });
-    this.clientservice.getClients(0).subscribe(clients =>{
+    this.clientservice.getClients(page).subscribe(clients =>{
       this.barber.clients = clients.content;
-      this.numberofPages = clients.number;
+      this.numberofPages = clients.totalPages;
     });
+    this.loading = false;
   }
 
 
@@ -105,5 +115,19 @@ export class BarberPage implements OnInit {
         }
       });
     }
+  }
+
+  onEventPage(page: number){
+    this.loadBarberData(page);
+    this.actualPage = page;
+  }
+
+  listenToLoading(){
+    this.loadService.loading
+    .pipe(delay(50))
+    .subscribe((loading) =>{
+      console.log(loading);
+      this.loading = loading;
+    })
   }
 }
