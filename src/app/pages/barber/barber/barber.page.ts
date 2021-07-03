@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 
@@ -33,6 +33,19 @@ export class BarberPage implements OnInit {
   actualPage: number = 0;
   
   loading: boolean = false;
+
+  barberForm:FormGroup = new FormGroup({
+    name: new FormControl('',
+      [Validators.required]
+    ),
+    username: new FormControl('',
+      [Validators.required]
+    ),
+    color: new FormControl('',
+      [Validators.required]
+    ),
+    password: new FormControl(''),
+  })
 
   constructor(private loadService: LoadService,private service: BarberService, private clientservice: ClientService, private store: Store<{login: State}>,private ref: ChangeDetectorRef) { 7
   }
@@ -95,7 +108,11 @@ export class BarberPage implements OnInit {
   loadBarberData(page: number){
     this.loading = true;
     this.service.getLoggedInUser().subscribe(logged =>{
+      logged.password = "";
       this.barber = logged;
+      this.controler('name').setValue(logged.name)
+      this.controler('username').setValue(logged.username)
+      this.controler('color').setValue(logged.color)
     });
     this.clientservice.getClients(page).subscribe(clients =>{
       this.barber.clients = clients.content;
@@ -129,5 +146,15 @@ export class BarberPage implements OnInit {
       console.log(loading);
       this.loading = loading;
     })
+  }
+
+  controler(name: string){
+    return this.barberForm.get(name) as FormControl
+  }
+
+  onUpdateBarber(){
+    this.service.updateBarber(this.barberForm.value, this.barber.id!).subscribe(value=>{
+      console.log(value);
+    });
   }
 }

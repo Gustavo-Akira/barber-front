@@ -18,6 +18,10 @@ export class BarberService {
   getLoggedInUser(){
     return this.http.get<Barber>(ServiceUtils.getBaseUrl() + "/barber/self",this.options);
   }
+
+  updateBarber(user: any, id: number){
+    return this.http.put<Barber>(ServiceUtils.getBaseUrl() + '/barber/'+id,user,this.options);
+  }
   constructor(private http: HttpClient, private store: Store<{login: State}>) { 
     this.store.subscribe(x=>{
       this.options.headers = {
